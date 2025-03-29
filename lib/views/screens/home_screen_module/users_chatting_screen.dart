@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +11,8 @@ import 'package:intl/intl.dart';
 class UsersChattingScreen extends StatefulWidget {
   final String userName;
   final String uid;
-  const UsersChattingScreen({super.key,required this.userName,required this.uid,});
+  final String imageUrl;
+  const UsersChattingScreen({super.key,required this.userName,required this.uid,required this.imageUrl});
 
   @override
   State<UsersChattingScreen> createState() => _UsersChattingScreenState();
@@ -66,8 +69,24 @@ class _UsersChattingScreenState extends State<UsersChattingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl = widget.imageUrl ?? '';
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: CircleAvatar(
+            minRadius: 3,
+            backgroundImage: imageUrl.isNotEmpty
+                ? (imageUrl.startsWith('http')
+                ? NetworkImage(imageUrl)
+                : (imageUrl.startsWith('assets/') // Check if it's an asset
+                ? const AssetImage('assets/images/user_profile_image.png',)
+                : FileImage(File(imageUrl)))) as ImageProvider
+                : const AssetImage('assets/default_avatar.png'),
+          ),
+        ),
+
+
         title: Text(widget.userName,style: GoogleFonts.poppins(fontSize: 20,fontWeight: FontWeight.w700),),
       ),
       body: Column(

@@ -2,12 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:new_chat_app_firebase/controllers/theme_provider/theme_provider.dart';
 import 'package:new_chat_app_firebase/views/screens/auth_module/sign_in_screen.dart';
 import 'package:new_chat_app_firebase/views/screens/home_screen_module/users_chatting_screen.dart';
 import 'package:new_chat_app_firebase/views/screens/user_profile_module/user_profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeChattingScreen extends StatefulWidget {
   const HomeChattingScreen({super.key});
@@ -32,6 +35,7 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
     await FirebaseAuth.instance.signOut();
   }*/
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +52,7 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
       itemBuilder: (context) => [
         PopupMenuItem(
           enabled: true,
-          child: Text('User Profile',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500),),
+          child: Text('User Profile',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black87),),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfileScreen()));
           },
@@ -124,6 +128,7 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
                             builder: (context) => UsersChattingScreen(
                               userName: showData['user name'] ?? 'Unknown User',
                               uid: showData['uid'] ?? '',
+                              imageUrl: showData['imageUrl'] ?? 'assets/images/user_profile_image.png'
                             ),
                           ),
                         );
@@ -141,14 +146,16 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
                                   : FileImage(File(showData['imageUrl']))) // Use FileImage for local paths
                                   : AssetImage('assets/images/user_profile_image.png') as ImageProvider, // Default image
                             ),
-                            title: Text(showData['user name'] ?? 'Unknown',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500),),
-                            subtitle: Text(showData['email'] ?? 'No email available',style: GoogleFonts.poppins(fontSize: 13),),
-                            trailing: Text(
+                            title: Text(showData['user name'] ?? 'Unknown',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500,
+                            color: Colors.black87),),
+                            subtitle: Text(showData['email'] ?? 'No email available',style: GoogleFonts.poppins(fontSize: 13,color: Colors.black87),),
+                            trailing: /*Text(
                               DateFormat('hh:mm a').format(
                                 (showData['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(), // Use null-aware operator
                               ),
                               style: TextStyle(fontSize: 14, color: Colors.grey),
-                            ),
+                            ),*/
+                            Icon(CupertinoIcons.chat_bubble,size: 20,color: Colors.green,)
 
 
                           ),

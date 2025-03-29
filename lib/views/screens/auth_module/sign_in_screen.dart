@@ -54,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5),
-                            child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 15.sp,),
+                            child: Icon(Icons.arrow_back_ios,color: Colors.black,size: 15.sp,),
                           ),
                         ),
                       ),

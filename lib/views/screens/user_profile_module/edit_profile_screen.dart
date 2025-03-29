@@ -115,6 +115,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                        if(data == null || data.containsValue('imageUrl')){
                          return Text('Data not available');
                        }
+                       updateNameController.text = data['user name'] ?? '';
+                       updateEmailController.text = data['email'] ?? '';
+                       updatePasswordController.text = data['password'] ?? '';
                        return Column(
                          children: [
                            SizedBox(height: 10,),
@@ -143,7 +146,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                TextFormField(
                                  controller : updateNameController,
                                  decoration: InputDecoration(
-                                   hintText : '${data['user name']}',
                                    border: OutlineInputBorder(
                                      borderRadius: BorderRadius.circular(12),
                                    )
@@ -155,7 +157,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                TextFormField(
                                  controller : updateEmailController,
                                  decoration: InputDecoration(
-                                     hintText : '${data['email']}',
                                      border: OutlineInputBorder(
                                        borderRadius: BorderRadius.circular(12),
                                      )
@@ -167,7 +168,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                TextFormField(
                                  controller : updatePasswordController,
                                  decoration: InputDecoration(
-                                     hintText : '${data['password']}',
                                      border: OutlineInputBorder(
                                        borderRadius: BorderRadius.circular(12),
                                      )

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:new_chat_app_firebase/views/screens/auth_module/sign_in_screen.dart';
 import 'package:new_chat_app_firebase/views/screens/home_screen_module/users_chatting_screen.dart';
 import 'package:new_chat_app_firebase/views/screens/user_profile_module/user_profile_screen.dart';
@@ -58,7 +59,7 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
     ],
         title: Text(
           'Chatting',
-          style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
+          style: GoogleFonts.poppins(fontSize: 23, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
@@ -67,24 +68,22 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
               width: double.infinity,
-              height: 40,
+              height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Colors.grey)
               ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Icon(Icons.search,size: 26,color: Colors.grey,),
-                  ),
-                  SizedBox(width: 10,),
-                  Text('Find user here',style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey
-                  ),)
-                ],
+              child:TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search,size: 26,color: Colors.grey,),
+                  hintText: 'Find user here',
+                  hintStyle: GoogleFonts.poppins(fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  )
+                ),
               ),
             ),
           ),
@@ -132,6 +131,7 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
+                          color: Colors.grey.shade100,
                           elevation: 5,
                           child: ListTile(
                             leading: CircleAvatar(
@@ -143,6 +143,14 @@ class _HomeChattingScreenState extends State<HomeChattingScreen> {
                             ),
                             title: Text(showData['user name'] ?? 'Unknown',style: GoogleFonts.poppins(fontSize: 18,fontWeight: FontWeight.w500),),
                             subtitle: Text(showData['email'] ?? 'No email available',style: GoogleFonts.poppins(fontSize: 13),),
+                            trailing: Text(
+                              DateFormat('hh:mm a').format(
+                                (showData['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(), // Use null-aware operator
+                              ),
+                              style: TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+
+
                           ),
                         ),
                       ),
